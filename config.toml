@@ -1,4 +1,4 @@
-baseurl = "/"
+baseurl = "https://fliptanedo.netlify.com/"
 title = "Flip Tanedo"
 copyright = "&copy; 2018 Philip (Flip) Tanedo"
 theme = "academic"
