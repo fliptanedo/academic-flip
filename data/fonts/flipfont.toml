@@ -1,0 +1,17 @@
+# Font style metadata
+name = "flipfont"
+
+# Optional Google font URL
+google_fonts = "Montserrat:400,700|Roboto:400,400italic,700|Roboto+Mono|Raleway|Lato"
+
+# Font families
+heading_font = "Montserrat"
+body_font = "Raleway"
+nav_font = "Raleway"
+mono_font = "Roboto Mono"
+
+# Font size
+font_size = "20"
+font_size_small = "16"
+# Font size affects #botbar1 placement
+# in Safari

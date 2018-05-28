@@ -1,4 +1,5 @@
 /*https://stackoverflow.com/questions/483212/effective-method-to-hide-email-from-spam-bots*/
+/* specifically: https://stackoverflow.com/a/41566570 */
 .cryptedmail:after {
   content: attr(data-name) "@" attr(data-domain) "." attr(data-tld);
 }

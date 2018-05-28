@@ -35,7 +35,7 @@ enableGitInfo = false
 
   gravatar = false  # Get your avatar from Gravatar.com? (true/false)
   avatar = "profile/Flip600_sq.jpg"  # Specify an avatar image (in `static/img/` folder) or delete value to disable avatar.
-  email = "flip@example.org"
+  # email = "flip@example.org"
   email1 = "flip.tanedo" # using cryptedmail
   email2 = "ucr" # using cryptedmail
   email3 = "edu" # using cryptedmail
@@ -74,7 +74,7 @@ enableGitInfo = false
 
   # Link custom CSS and JS assets
   #   (relative to /static/css and /static/js respectively)
-  custom_css = ['flip2019layout.css', 'cryptedmail.css']
+  custom_css = ['flip2019layout.css', 'cryptedmail.css', 'flip2018.css', 'flipaboutme.css']
   custom_js  = []
 
   # FOOTER PARAMETERS

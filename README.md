@@ -180,6 +180,43 @@ And here's what I put into `footer_container.html`:
   email3 = "edu" # using cryptedmail
 ```
 
+Commenting out the old e-mail removes that line in the `contact` widget. We'll use the [cryptedmail trick](https://stackoverflow.com/a/41566570). Create a `contact.html` widget in `\layouts\partials\widgets\` to 
+
+```html
+<!-- FLIP UPDATE -->
+<!-- from: https://stackoverflow.com/a/41566570 -->
+      
+      {{ with $.Site.Params.email1 }}
+      <li>
+        <i class="fa-li fa fa-envelope fa-2x" aria-hidden="true"></i>
+        <span id="person-email" itemprop="email">
+        <!-- {{- if $autolink }}<a href="mailto:{{ . }}">{{ $.Site.Params.email2 }}</a>{{ else }}{{ . }}{{ end -}} -->
+          <a data-name="{{ $.Site.Params.email1 }}" data-domain="{{ $.Site.Params.email2 }}" data-tld="{{ $.Site.Params.email3 }}" href="#" class="cryptedmail" onclick="window.location.href = 'mailto:' + this.dataset.name + '@' + this.dataset.domain + '.' + this.dataset.tld"></a>
+        </span>
+      </li>
+      {{ end }}
+
+<!-- /FLIP UPDATE -->
+```
+
+4. Added `flip2018.css` (introduces `comment` class, also Google calendar settings), and `flipaboutme.css` which modifies the `about` widget.
+
+5. Added `about2.html` in `\layouts\partials\widgets` and modified `\content\home\about.md` to have the line
+
+```md
+widget = "about2"
+```
+
+## 4. Fonts 'n stuff
+
+1. I shouldn't need to install any fonts in `head_custom.html`; do *not* do:
+
+```html
+<link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+```
+
+2. I'm in the middle of loading `flipfont`
+
 ## License
 
 *Copied from original Academic Kickstart `README.md`*
