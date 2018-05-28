@@ -1,0 +1,70 @@
+/*  FOOTER BAR  */
+
+footer {
+  /* font-family: 'Raleway', sans-serif; */
+  background-color:#333333;
+  /* Fixing academic.css line 979  */
+  margin: 64px 0 0;
+  padding: 32px 0;
+}
+
+#botbar1{
+	background-color:#C1BBAB;
+	margin: 0;
+	padding: 0;
+  position:relative;
+  top: -35px;
+	left: 0px;
+	z-index: 9;
+	height: 7px;
+	width: 100%;
+}
+
+
+#feynmanfoot{
+	background-size: 250px 200px;
+	background-repeat:no-repeat;
+	background-position:left top;
+  pointer-events: none;
+	margin: 0;
+	padding: 0;
+  position: relative;
+  /* bottom: -100px;  */ /* if you place div above footer */
+  bottom: 205px;
+  left: 40vw;
+	z-index: 200;
+	height: 200px;
+	width: 250px;
+	text-align: right;
+}
+
+
+/* Kludge for overscrolling */
+/* Color the background */
+body{
+  background-color:#333333;
+}
+
+
+#THECONTENT{
+  background-color: #ffffff;
+}
+
+
+/* FOOTER  */
+
+footer {
+  /* margin: 4rem 0 0;
+  padding: 2rem 0; */
+  width: 100%;
+}
+
+footer p {
+  /* font-size: 0.75rem; */
+  text-align: left;
+}
+
+.site-footer,
+footer a#back_to_top i {
+  color: #899596;
+}

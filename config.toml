@@ -71,8 +71,11 @@ enableGitInfo = false
 
   # Link custom CSS and JS assets
   #   (relative to /static/css and /static/js respectively)
-  custom_css = []
+  custom_css = ['flip2019layout.css']
   custom_js  = []
+
+  # FOOTER PARAMETERS
+  footmark = "layout/feynmanfooter.png"
 
 
   # Social/Academic Networking

@@ -29,6 +29,132 @@ Delete:
 * Remove the fluff in `config.toml` ... there's a lot fo commentary. They're good to have handy, but it's distracting when the `config` file gets longer. I'll make a backup and then streamline.
 
 
+## 2. Footer and Main Page Design
+
+The biggest change is to update the footer. Since this is the part that's been giving me the most headaches.
+
+1. Create a `<div id="THECONTENT">`. The purpose: this will be a white canvas. The `<body>` tag behind it will be dark gray to match the header and footer so that "overscrolling" will not look strange. (A) Make folder `/layouts/partials/` to include template overwrites. (B) Copy the following files from the corresponding `template` folder `footer_container.html`, `head_custom.html`, and `navbar.html`. 
+
+2. Add the following line to the bottom of `navbar.html`: 
+
+```html
+<div id="THECONTENT"> <!-- closed in footer_container.html; see flip2019.css -->
+```
+
+3. Add the following line to the bottom of `footer_container.html`:
+
+```html
+</div> <!--  ends id=#THECONTENT from navbar.html; see flip2019.css -->
+```
+
+4. Add folder: `/static/css/` Insert file `flip2019.css` (based on `flip2018.css`) This introduces a bunch of kludges. For now, the main point of this file is to contain:
+
+```css
+footer {
+  /* font-family: 'Raleway', sans-serif; */
+  background-color:#333333;
+}
+
+#botbar1{
+	background-color:#C1BBAB;
+	margin: 0;
+	padding: 0;
+  position:relative;
+  top: 85px;
+	left: 0px;
+	z-index: 9;
+	height: 7px;
+	width: 100%;
+}
+
+body{
+  background-color:#333333;
+}
+```
+
+5. Load `flip2019layout.css` by updating the `custom_css` line in `config.toml`:
+
+```
+custom_css = ['flip2019layout.css']
+```
+
+At this point, you should have a dark gray footer. Now let's get to the gray line separating the main content and the footer. This is what we call `#botbar1`. 
+
+6. In `\layouts\partials\footer_container.html`, insert a `#botbar` div:
+
+```html
+<footer class="site-footer">
+  <!-- FLIP'S NEW STUFF BELOW -->
+  <div id="botbar1"></div>
+  <!-- FLIP'S NEW STUFF ABOVE -->
+  <div class="container">
+
+```
+
+The bottom line should show up at the bottom of the page. You should play with the `#botbar1` top margin in `flip2019layout.css` to see where this line ends up. There's something pressing and subtle to sort out first, though:
+
+7. Fix the `footer` style so that it's written in `px` rather than `rem` or `em`. The problem with `rem` (relative to root) or `em` is that when the font size changes from responsive design, the padding will shift which will force you to re-calculate the top shift of `#botbar`.
+
+
+```css
+footer {
+  /* font-family: 'Raleway', sans-serif; */
+  background-color:#333333;
+  /* Fixing academic.css line 979  */
+  margin: 64px 0 0;
+  padding: 32px 0;
+}
+
+#botbar1{
+	background-color:#C1BBAB;
+	margin: 0;
+	padding: 0;
+  position:relative;
+  top: -35px;
+	left: 0px;
+	z-index: 9;
+	height: 7px;
+	width: 100%;
+}
+```
+
+8. Now insert Feynman footer. Insert iamge into `/static/img/layout/feymmanfooter.png`. Here's what seems to work for `flip2019layout.css`:
+
+```css
+#feynmanfoot{
+	background-size: 250px 200px;
+	background-repeat:no-repeat;
+	background-position:left top;
+  pointer-events: none;
+	margin: 0;
+	padding: 0;
+  position: relative;
+  /* bottom: -100px;  */ /* if you place div above footer */
+  bottom: 205px;
+  left: 40vw;
+	z-index: 200;
+	height: 200px;
+	width: 250px;
+	text-align: right;
+}
+```
+
+And here's what I put into `footer_container.html`:
+
+```html
+<footer class="site-footer">
+  <!-- FLIP'S NEW STUFF BELOW -->
+  <div id="botbar1"> </div>
+  <div style="position: relative; width: 0; height: 0">
+    <div id="feynmanfoot" style="background-image:url('{{ $.Site.BaseURL }}/img/{{ .Site.Params.footmark }}');"></div>
+  </div>
+  <div style="height: 20px">
+    <!-- JUST A SPACER -->
+  </div>
+  <!-- FLIP'S NEW STUFF ABOVE -->
+  <div class="container">
+```
+
 ## License
 
 *Copied from original Academic Kickstart `README.md`*
