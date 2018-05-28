@@ -161,6 +161,25 @@ And here's what I put into `footer_container.html`:
 
 1. `config.toml`: `avatar = "profile/Flip600_sq.jpg"` (and upload the respective file)
 
+2. In `header.html` (theme default) we have the following: So insert `icon.png` and `icon-192.png` as appropriate.
+<!--add `\static\favicon.ico` In -->
+
+```html
+  <link rel="icon" type="image/png" href="{{ "/img/icon.png" | relURL }}">
+  <link rel="apple-touch-icon" type="image/png" href="{{ "/img/icon-192.png" | relURL }}">
+```
+
+(You don't need to make edits to `header.html` for this.)
+
+3. `cryptedemail.css` is a hack for displaying e-mail addresses in a way that isn't too easy for bots to scrape. Include it in the `config.toml` list of css files. It goes with `\layouts\shortcodes\flipemail.html` which provides a simple way to insert e-mail addresses. You'll also want to break up the e-mail address in `config.toml`:
+
+```
+  # email = "test@example.org"  # using cryptedmail
+  email1 = "flip.tanedo" # using cryptedmail
+  email2 = "ucr" # using cryptedmail
+  email3 = "edu" # using cryptedmail
+```
+
 ## License
 
 *Copied from original Academic Kickstart `README.md`*

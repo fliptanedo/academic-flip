@@ -1,0 +1,10 @@
+<!-- in conjunction with cryptedemail.css -->
+<a
+  data-name="{{ .Get "first" }}"
+  data-domain="{{ .Get "domain" }}"
+  data-tld="{{ .Get "last" }}"
+  href="#"
+  class="cryptedmail"
+  onclick="window.location.href = 'mailto:' + this.dataset.name + '@' + this.dataset.domain + '.' + this.dataset.tld"
+  style="font-family: 'Titillium Web', sans-serif;">
+</a>

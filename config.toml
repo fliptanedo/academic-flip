@@ -36,6 +36,9 @@ enableGitInfo = false
   gravatar = false  # Get your avatar from Gravatar.com? (true/false)
   avatar = "profile/Flip600_sq.jpg"  # Specify an avatar image (in `static/img/` folder) or delete value to disable avatar.
   email = "flip@example.org"
+  email1 = "flip.tanedo" # using cryptedmail
+  email2 = "ucr" # using cryptedmail
+  email3 = "edu" # using cryptedmail
   address = "3054 Physics Building, University of California, Riverside, CA 92521, USA"
   office_hours = "Email for appointment"
   phone = "x26168"
@@ -71,7 +74,7 @@ enableGitInfo = false
 
   # Link custom CSS and JS assets
   #   (relative to /static/css and /static/js respectively)
-  custom_css = ['flip2019layout.css']
+  custom_css = ['flip2019layout.css', 'cryptedmail.css']
   custom_js  = []
 
   # FOOTER PARAMETERS
@@ -135,25 +138,6 @@ enableGitInfo = false
   url = "#publications_selected"
   weight = 2
 
-[[menu.main]]
-  name = "Posts"
-  url = "#posts"
-  weight = 3
-
-[[menu.main]]
-  name = "Projects"
-  url = "#projects"
-  weight = 4
-
-[[menu.main]]
-  name = "Teaching"
-  url = "#teaching"
-  weight = 5
-
-[[menu.main]]
-  name = "Contact"
-  url = "#contact"
-  weight = 6
 
 # Taxonomies.
 [taxonomies]
