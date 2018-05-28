@@ -1,49 +1,37 @@
-# Academic Kickstart
+# Flip's Set Up Notes
 
-**Academic** is a framework to help you create a beautiful website quickly. Perfect for personal, student, or academic websites. [Check out the latest demo](https://themes.gohugo.io/theme/academic/) of what you'll get in less than 10 minutes or [view the documentation](https://sourcethemes.com/academic/docs/).
+These are notes on how I modified the May 2018 version of `Hugo Theme Academic` (George Cushen) to create my personal website. 
 
-**Academic Kickstart** provides a minimal template to kickstart your new website by following the simple steps below.
+## Main Goals
 
-[![Screenshot](https://raw.githubusercontent.com/gcushen/hugo-academic/master/academic.png)](https://github.com/gcushen/hugo-academic/)
+* Update the `Academic` theme style to include my Feynman diagram footer, which requires some hacks to the style sheets. 
 
-## Getting Started
+* Note: modifying the footer ends up being a little subtle because of the way the footer margins and padding are tied to the font size. The font size changes (responsive design), which means the footer parameters change with screen size. In turn, this makes it difficult to place graphical footer elements.
 
-The following two methods describe how to install in the cloud using your web browser and how to install on your PC using the Command Prompt/Terminal app.
+## My work environment
 
-### Quick install using your web browser
+I used **netlify** to kickstart my fork of Hugo Theme Academic. This should make it easier to have my university url point to the netlify repository.
 
-1. [Install Academic with Netlify](https://app.netlify.com/start/deploy?repository=https://github.com/sourcethemes/academic-kickstart)
-    * Netlify will provide you with a customizable URL to access your new site
-2. On GitHub, go to your newly created `academic-kickstart` repository and edit `config.toml` to personalize your site. Shortly after saving the file, your site will automatically update
-3. Read the [Quick Start Guide](https://sourcethemes.com/academic/docs/) to learn how to add Markdown content. For inspiration, refer to the [Markdown content](https://github.com/gcushen/hugo-academic/tree/master/exampleSite) which powers the [Demo](https://themes.gohugo.io/theme/academic/)
+I am using the **GitHub** OS X interface to take care of synchronizing with GitHub. I use `Atom` to edit files.
 
-### Install on your PC
+I have a separate folder `\Graphic Sources`` that includes source files for Affinity Designer graphics. 
 
-Prerequisites:
+## 1. Initial Set Up
 
-* [Download and install Git](https://git-scm.com/downloads)
-* [Download and install Hugo](https://gohugo.io/getting-started/installing/#quick-install)
+Here are the steps that I'm taking to go from the clean example site to one that is ready for hacking.
 
-1. Clone (or [Fork](https://github.com/sourcethemes/academic-kickstart#fork-destination-box) or [download](https://github.com/sourcethemes/academic-kickstart/archive/master.zip)) the *Academic Kickstart* repository with Git: 
+Delete:
 
-       git clone https://github.com/sourcethemes/academic-kickstart.git My_Website
-    
-    *Note that if you forked Academic Kickstart, the above command should be edited to clone your fork.*
+* `\content\home\*` *except* `about.md`, `contact.md`, and `teaching.md` (template)
+ 
+* `\content\post` , `\content\publication`, `\content\talk`
 
-2. Initialize the theme:
+* Remove the fluff in `config.toml` ... there's a lot fo commentary. They're good to have handy, but it's distracting when the `config` file gets longer. I'll make a backup and then streamline.
 
-       cd My_Website
-       git submodule update --init --recursive
-
-3. View your new website:
-      
-       hugo server
-
-    Now you can go to [localhost:1313](http://localhost:1313) and your new Academic powered website should appear.
-  
-4. Read the [Quick Start Guide](https://sourcethemes.com/academic/docs/) to learn how to add Markdown content, customize your site, and deploy it.
 
 ## License
+
+*Copied from original Academic Kickstart `README.md`*
 
 Copyright 2017 [George Cushen](https://georgecushen.com).
 
