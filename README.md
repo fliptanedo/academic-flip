@@ -146,7 +146,7 @@ And here's what I put into `footer_container.html`:
   <!-- FLIP'S NEW STUFF BELOW -->
   <div id="botbar1"> </div>
   <div style="position: relative; width: 0; height: 0">
-    <div id="feynmanfoot" style="background-image:url('{{ $.Site.BaseURL }}/img/{{ .Site.Params.footmark }}');"></div>
+    <div id="feynmanfoot" style="background-image:url('{{ .Site.BaseURL }}/img/{{ .Site.Params.footmark }}');"></div>
   </div>
   <div style="height: 20px">
     <!-- JUST A SPACER -->
@@ -154,6 +154,12 @@ And here's what I put into `footer_container.html`:
   <!-- FLIP'S NEW STUFF ABOVE -->
   <div class="container">
 ```
+
+(Note: there's an error in the 2018 version of my styel file where a stray `$` makes the `feymanfoot` div fail to be found on Netlify.)
+
+## 3. Personalization
+
+1. `config.toml`: `avatar = "profile/Flip600_sq.jpg"` (and upload the respective file)
 
 ## License
 
