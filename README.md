@@ -1,3 +1,7 @@
+# Flip's Website
+
+This is Flip Tanedo's website. Currently hosted on [Netlify](http://fliptanedo.netlify.com).
+
 # Flip's Set Up Notes
 
 These are notes on how I modified the May 2018 version of `Hugo Theme Academic` (George Cushen) to create my personal website. 
@@ -215,7 +219,49 @@ widget = "about2"
 <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
 ```
 
-2. I'm in the middle of loading `flipfont`
+2. Insert `\data\fonts\flipfont.toml` and update the `config.toml` file to include
+
+```toml
+font = "flipfont"
+```
+
+To fix the e-mail font, put this in `flip2018.css`:
+
+```css
+#person-email{
+  font-family: 'Titillium Web', sans-serif;
+}
+
+.style-email{
+  font-family: 'Titillium Web', sans-serif;
+}
+```
+
+Use `style-email` in the `flipemail.html` shortcode:
+
+```html
+<!-- in conjunction with cryptedemail.css -->
+<a
+  data-name="{{ .Get "first" }}"
+  data-domain="{{ .Get "domain" }}"
+  data-tld="{{ .Get "last" }}"
+  href="#"
+  class="cryptedmail"
+  onclick="window.location.href = 'mailto:' + this.dataset.name + '@' + this.dataset.domain + '.' + this.dataset.tld"
+  class="style-email">
+</a>
+```
+
+
+## 5. Colors
+
+1. Paste in `data\themes\fliptheme.toml` (this is a color theme)
+
+2. Include it in `config.toml`
+
+```toml
+color_theme = "fliptheme"
+```
 
 ## License
 

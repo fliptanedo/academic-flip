@@ -33,8 +33,8 @@ weight = 5
 
 +++
 
-# Biography
+# <span class="style-widget-title">Bio</span>
 
-Lena Smith is a professor of artificial intelligence at the Stanford AI Lab. Her research interests include distributed robotics, mobile computing and programmable matter. She leads the Robotic Neurobiology group, which develops self-reconfiguring robots, systems of self-organizing robots, and mobile sensor networks.
+Flip Tanedo spends a lot of time thinking about dark matter.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.
+He grew up in Los Angeles and fell in love with physics after reading *The Physics of Star Trek*. This carried into degrees in mathematics and physics at Stanford, Cambridge, Durham, and a Ph.D at Cornell. After a postdoc at UC Irvine, he is currently faculty at UC Riverside where he is known for being covered in chalk dust after a long day's work.

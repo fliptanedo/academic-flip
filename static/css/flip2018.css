@@ -6,6 +6,17 @@
   font-size: .9rem;
 }
 
+#person-email{
+  font-family: 'Titillium Web', sans-serif;
+}
+
+.style-email{
+  font-family: 'Titillium Web', sans-serif;
+}
+
+.style-widget-title{
+  color:#DADADA;
+}
 
 
 /* For google calendar */
