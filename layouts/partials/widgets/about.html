@@ -17,8 +17,8 @@
       <div class="portrait-title">
         <h2 itemprop="name">{{ $.Site.Params.name }}</h2>
         {{ with $.Site.Params.role }}
-          <h3 itemprop="jobTitle">{{ . }}</h3>
-          <!-- <h3 itemprop="jobTitle" style="font-family:Lato;">{{ . }}</h3> -->
+          <!-- <h3 itemprop="jobTitle">{{ . }}</h3> -->
+          <h3 itemprop="jobTitle" style="font-family:Lato;">{{ . }}</h3>
         {{ end }}
 
         {{/* Support legacy `organization` option. */}}
@@ -31,7 +31,7 @@
         {{ end }}
 
         {{ range $.Site.Params.organizations }}
-        <h3 itemprop="worksFor" itemscope itemtype="http://schema.org/Organization">
+        <h3 itemprop="worksFor" itemscope itemtype="http://schema.org/Organization" style="font-family:Lato;">
         <!-- <h3 itemprop="worksFor" itemscope itemtype="http://schema.org/Organization" style="font-family:Lato;"> -->
           {{ with .url }}<a href="{{ . }}" target="_blank" itemprop="url" rel="noopener">{{ end }}
           <span itemprop="name">{{ .name }}</span>

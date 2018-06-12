@@ -263,6 +263,168 @@ Use `style-email` in the `flipemail.html` shortcode:
 color_theme = "fliptheme"
 ```
 
+## 6. Tweaking the nav bar
+
+The only qualm I have about the navbar is that it defaults to being "tap to menu" for sizes below 1200px.  This is called the **breakpoint** of the navigation bar. 1200px exceedingly generous if you only have a few sections on your main page or if you want to use the navbar to navigate to other pages. 
+
+### 6.a. How *not* to do it
+
+See line 1232 of `\themes\academic\layouts\partials\css\academic.css` to tweak this:
+
+```css
+@media screen and (max-width: 1200px) {
+```
+
+I think you should be able to copy `academic.css` into a local folder (you should *not* tweak the template file in the `\themes\` directory). This, however, will supercede the entire `academic.css` style file, which may not be what you want long term if there are updates. (*Update: I can confirm that this strategy does work, though.*) Instead, we need to find a way to overwrite only the `display:block;` style.
+
+Maybe the alternative should be `{display: inline;}`. No. There's definitely more to it than this. Looks like there's some bootstrap being called, e.g. `data-toggle`. I'm trying to sleuth this from the `navbar.html` template file.
+
+### 6.b. The correct way to do it
+
+* Indeed, the three calls to `<span class="icon-bar"></span>` is the triple-bar "[menu bar](https://stackoverflow.com/questions/18864657/icon-bar-in-twitter-bootstrap-navigation-bar)"; this comes from bootstrap.
+* Lots of info looking at pages about the **Bootstrap** navigation bar!
+ * [bootstrapius](https://bootstrapious.com/p/bootstrap-navbar#navbar-collapse) 
+ * [love2dev](https://love2dev.com/blog/bootstrap-navbar/)
+
+From bootstrapius:
+> The navbar collapse is the component which wraps the remain components of the navbar, such as navbar menu, navbar buttons, forms... etc. In other words, it wraps all navbar components except `.navbar-header`.
+
+> It's defined by the two classes `.collapse navbar-collapse`. This box should have an `id`, this id must be identical to the toggle button `data-target=""` value.
+
+> Contrary to the navbar toggle button, *navbar collapse is visible by default on larger screens and hidden on smaller ones*. On smaller screens, it is switched from hidden to visible and vice versa by clicking navbar toggle button.
+
+The thing I'm looking for is called the **breakpoint**. Use that in my search queries. Maybe [this](https://stackoverflow.com/questions/19827605/change-bootstrap-navbar-collapse-breakpoint-without-using-less). The "[2018 update](https://stackoverflow.com/a/36289507/4812646)" answer is the one that I want:
+
+> Changing the navbar breakpoint is easier in Bootstrap 4 using the navbar-expand-* classes:
+
+```html
+<nav class="navbar fixed-top navbar-expand-sm">..</nav>
+```
+
+The options are
+
+* `navbar-expand-sm`: mobile menu on xs screens <576px
+* `navbar-expand-md`: mobile menu on sm screens <768px
+* `navbar-expand-lg`: mobile menu on md screens <992px
+* `navbar-expand-xl`: mobile menu on lg screens <1200px
+* `navbar-expand`: never use mobile menu
+* *(no expand class)* = always use mobile menu
+
+See [this example](https://www.codeply.com/go/n4Pn4aB695). So what we really need is to hack is `\layouts\partials\navbar.html`, which we have already modified when we added the `<div id="THECONTENT">` line at the end of the file.
+
+On the top line, change
+
+```html
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+```
+
+to
+
+```html
+<nav class="navbar navbar-default navbar-fixed-top navbar-expand-sm" id="navbar-main">
+```
+
+**Unfortunately**, Bootstrap 4 is [*not* supported yet](https://github.com/gcushen/hugo-academic/issues/509) with Hugo Theme Academic (as of June 2018). 
+
+Fortunately, the "[2018 update](https://stackoverflow.com/a/36289507/4812646)" answer has a Bootstrap 3 guide:
+
+```css
+@media (max-width: 991px) {
+  .navbar-header {
+      float: none;
+  }
+  .navbar-left,.navbar-right {
+      float: none !important;
+  }
+  .navbar-toggle {
+      display: block;
+  }
+  .navbar-collapse {
+      border-top: 1px solid transparent;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .navbar-fixed-top {
+      top: 0;
+      border-width: 0 0 1px;
+  }
+  .navbar-collapse.collapse {
+      display: none!important;
+  }
+  .navbar-nav {
+      float: none!important;
+      margin-top: 7.5px;
+  }
+  .navbar-nav>li {
+      float: none;
+  }
+  .navbar-nav>li>a {
+      padding-top: 10px;
+      padding-bottom: 10px;
+  }
+  .collapse.in{
+      display:block !important;
+  }
+}
+```
+
+Where one can change `991px` to any number over `768px`. The case for smaller breakpoints is discussed [here](https://stackoverflow.com/questions/42724884/bootstrap-navbar-collapse-point-768px/42725215#42725215). *Damn*, this doesn't seem to work.
+
+Okay. I give up on this. I should just move on.
+
+Some other notes
+
+* It's weird that it works if I just make a local copy of `academic.css`. The real problem is *undoing* the navbar stuff in `academic.css`. Ideally one should put something in
+
+```css
+@media (min-width: 800px) and (max-width: 1200px)
+```
+
+in the `flipnav.css` file that "undoes" the effect of the `academic.css` `@media` piece in the navbar section. To do this, I have to go through the `academic.css` `@media` part and undo each declaration by returning it to its `academic.css` *or* bootstrap default value (if its not touched in `academic.css`. This is a total pain.
+
+**Work in Progress**: I think the way to do this is to   
+
+1. Look at the **navbar** section of `academic.css`, specifically the `@media (max-width: 1200px)` portion that describes what to modify when the screen is small.  
+
+2. You need to compare this to (a) the default behavior in `academic.css` when the screen is large, which is sometimes (b) the behavior specified in **bootstrap 3**.
+
+This is a bit of an annoying task. A better solution would be to move the whole platform to bootstrap 4, but that's a large undertaking. For now I'm going to leave the default 1200px breakpoint as is.
+
+## 7. More formatting tweaks
+
+* In `/layouts/partials/widgets/about.html` around line 19 (`<div class="portrait-title">`), did a minor font change for the job title and organization:
+
+```html
+      <div class="portrait-title">
+        <h2 itemprop="name">{{ $.Site.Params.name }}</h2>
+        {{ with $.Site.Params.role }}
+          <!-- <h3 itemprop="jobTitle">{{ . }}</h3> -->
+          <h3 itemprop="jobTitle" style="font-family:Lato;">{{ . }}</h3>
+        {{ end }}
+```
+
+* Make the navbar opaque. Opacity is in the `rgba` css designator. I'm going to put this in `flipnav.css`, which I originally made to modify the beakpoint.
+
+```css
+.navbar-default{
+    background-color:rgba(0, 0, 0, 0.75);
+}
+ 
+.navbar-default .navbar-brand {
+  color: white;
+}
+ 
+.navbar-default .navbar-nav li a{
+    color: white;
+}
+ 
+.navbar-default .navbar-nav li a:hover{
+    background-color: #333333;
+}
+```
+
+* Footer triple column, inspired by [hugo-initio](https://themes.gohugo.io/theme/hugo-initio/) theme by Miguel Simoni. 
+
+
 ## License
 
 *Copied from original Academic Kickstart `README.md`*

@@ -1,0 +1,25 @@
+/*
+ Ideally I'd like to change the Bootstrap 3 navbar break point.
+ This has proven to be tricky.
+ Leaving this here as a stub.
+ */
+
+
+/* NAVBAR OPACITY   */
+/* Opaque navbar using the rgba assignment */
+/* Note: this may all change with bootstrap 4 */
+.navbar-default{
+    background-color:rgba(0, 0, 0, 0.75);
+}
+
+.navbar-default .navbar-brand {
+  color: white;
+}
+
+.navbar-default .navbar-nav li a{
+    color: white;
+}
+
+.navbar-default .navbar-nav li a:hover{
+    background-color: #333333;
+}
