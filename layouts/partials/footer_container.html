@@ -9,6 +9,28 @@
   </div>
   <!-- FLIP'S NEW STUFF ABOVE -->
   <div class="container">
+
+<!-- FLIP NEW STUFF: Three columns -->
+      <div class="row" id="footer-columns">
+        <div class="col-sm-4" id="footer-col-1">
+          <img src="{{ $.Site.BaseURL }}img/{{ $.Site.Params.stacklogo }}">
+        </div>
+        <div class="col-sm-4" id="footer-col-1">
+          <!-- <img src="{{ $.Site.BaseURL }}img/{{ $.Site.Params.deptlogo }}"> -->
+          {{ $.Site.Params.legalblurb }}
+        </div>
+        <div class="col-sm-4" id="footer-col-1">
+          Powered by the
+          <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a> engine
+          <!-- <br/ > -->
+          Adapted from <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic</a>.
+          <!-- <br/ > -->
+          &copy Philip (Flip) Tanedo 2018
+        </div>
+      </div>
+
+<!-- OLD STUFF -->
+<!--
     <p class="powered-by">
 
       {{ with .Site.Copyright }}{{ . | markdownify}} &middot; {{ end }}
@@ -26,7 +48,11 @@
       </span>
 
     </p>
-  </div>
+-->
+<!-- powered by -->
+
+
+  </div> <!-- class container -->
 </footer>
 
 <!-- Citation modal -->

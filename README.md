@@ -391,7 +391,9 @@ This is a bit of an annoying task. A better solution would be to move the whole 
 
 ## 7. More formatting tweaks
 
-* In `/layouts/partials/widgets/about.html` around line 19 (`<div class="portrait-title">`), did a minor font change for the job title and organization:
+### Tweaking job title font
+
+In `/layouts/partials/widgets/about.html` around line 19 (`<div class="portrait-title">`), did a minor font change for the job title and organization:
 
 ```html
       <div class="portrait-title">
@@ -422,8 +424,131 @@ This is a bit of an annoying task. A better solution would be to move the whole 
 }
 ```
 
-* Footer triple column, inspired by [hugo-initio](https://themes.gohugo.io/theme/hugo-initio/) theme by Miguel Simoni. 
+### Triple Column in Footer
 
+Footer triple column, inspired by [hugo-initio](https://themes.gohugo.io/theme/hugo-initio/) theme by Miguel Simoni. This is a fairly simple one, use a *bootstrap* grid. We have to modify `\layouts\partials\footer_container.html`:
+
+The `div` layout is as follows:  
+`footer site-footer` > `div botbar1` > `div feynmanfoot` > `div` (spacer) > `div container`  
+
+In the default academic theme, the next layer is a `p powered-by`. What we're going to do is replace that with a `div row` > `div col-sm-4`.
+
+Now we should define some logos to put into the columns. I'm adding the information under the `#FOOTER PARAMETERS` part of `config.toml`. 
+
+Here's what it looks like:
+
+footer_container.html:  
+
+```html
+<!-- FLIP NEW STUFF: Three columns -->
+      <div class="row" id="footer-columns">
+        <div class="col-sm-4" id="footer-col-1">
+          <img src="{{ $.Site.BaseURL }}img/{{ $.Site.Params.stacklogo }}">
+        </div>
+        <div class="col-sm-4" id="footer-col-1">
+          <!-- <img src="{{ $.Site.BaseURL }}img/{{ $.Site.Params.deptlogo }}"> -->
+          {{ $.Site.Params.legalblurb }}
+        </div>
+        <div class="col-sm-4" id="footer-col-1">
+          Powered by the
+          <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a> engine
+          <!-- <br/ > -->
+          Adapted from <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic</a>.
+          <!-- <br/ > -->
+          &copy Philip (Flip) Tanedo 2018
+        </div>
+      </div>
+```
+
+config.toml:
+
+```
+  # FOOTER PARAMETERS
+  footmark = "layout/feynmanfooter.png"
+  stacklogo = "logo/UCR_PhysicsAndAstro_Logo_fordarkBG3.png"
+  legalblurb = "All opinions expressed here are my own and do not necessarily represent those of any other agencies or groups."
+```
+
+flip2018layout.css:  
+
+```
+/*  FOOTER 3 Column  */
+
+#footer-columns{
+  padding-top: 35px;
+  margin-right: 20px;
+  margin-left: 20px;
+  font-size: .75rem;
+  font-family:Lato;
+}
+
+#footer-col-1{
+  padding-bottom: 25px;
+}
+
+#footer-columns img{
+  max-width: 200px;
+  opacity: .5;
+}
+```
+
+## 8. Content
+
+### About Widget
+
+We'd like to put a watermark.
+
+In flip2018.css:  
+
+```css
+/* to make "white bg" transparent */
+.home-section {
+  background-color: transparent;
+  z-index: 1;
+}
+
+#watermark{
+	/*background-image:url('http://physics.ucr.edu/~flip/images/BG_Bundle2.jpg');*/
+	background-size: 700px 350px;
+	background-repeat:no-repeat;
+	background-position:left top;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	top: 30px;
+	left: 0px;
+  pointer-events: none;
+	/*z-index: 0;*/
+	height: 100%;
+	width: 100%;
+	text-align: right;
+	opacity: 0.1;
+}
+```
+
+Now hack the top of `layouts\partials\navbar.html` (which we already modified for the navbr):  
+
+```html
+<!-- FOR WATERMARK -->
+<!-- Put it here for convenience -->
+<div id="watermark" style="background-image:url('{{ $.Site.BaseURL }}/img/{{ .Site.Params.watermark }}');"></div>
+<!--  -->
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+```
+
+Note: in past iterations I hacked `header.html`, but this is annoying since it's another template default file that we're over-riding for a small reason. Instead, it's easy to see that `header.html` is always immediately followed by `navbar.html` and, further, that the place to insert the watermark is just after the `<body>` opening, which is the last line of `header.html`. Thus placing the watermark `<div>` as the first line of `navbar.html` gives the identical effect.
+
+### CV Widget
+
+Create a `\layouts\partials\widgets\CV.html` file based on the `academic\layouts\partials\widgets\custom.html` template. Create a `/content/home/CV.md` file based on the `/content/home/teaching.md` tempalte.
+
+In `CV.md`, first point to the `CV.html` widget template: `widget = "CV"`.
+
+
+
+### Research Widget
+
+This would be great for a carousel. I believe this is easy in [Bootstrap](https://www.w3schools.com/bootstrap/bootstrap_carousel.asp).
 
 ## License
 

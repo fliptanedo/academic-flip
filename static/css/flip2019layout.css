@@ -68,3 +68,22 @@ footer p {
 footer a#back_to_top i {
   color: #899596;
 }
+
+/*  FOOTER 3 Column  */
+
+#footer-columns{
+  padding-top: 35px;
+  margin-right: 20px;
+  margin-left: 20px;
+  font-size: .75rem;
+  font-family:Lato;
+}
+
+#footer-col-1{
+  padding-bottom: 25px;
+}
+
+#footer-columns img{
+  max-width: 200px;
+  opacity: .5;
+}

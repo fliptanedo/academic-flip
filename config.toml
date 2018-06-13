@@ -79,6 +79,11 @@ enableGitInfo = false
 
   # FOOTER PARAMETERS
   footmark = "layout/feynmanfooter.png"
+  stacklogo = "logo/UCR_PhysicsAndAstro_Logo_fordarkBG3.png"
+  legalblurb = "All opinions expressed here are my own and do not necessarily represent those of any other agencies or groups."
+
+  # HEADER PARAMETERS
+  watermark = "background/Bundle3.jpg"
 
 
   # Social/Academic Networking
