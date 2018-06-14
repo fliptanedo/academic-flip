@@ -492,6 +492,69 @@ flip2018layout.css:
 }
 ```
 
+### Footer
+
+Widget pages (like the home page) use the `nth-of-type` CSS structure to create alternating styles. The final widget may end up with a gray background. 
+
+Here's how `academic.css` does it:
+
+```css
+.home-section {
+  background-color: {{ .Get "home_section_odd" }};
+  padding: 110px 0 110px 0;
+  animation: intro 0.3s both;
+  animation-delay: 0.15s;
+}
+
+.home-section:first-of-type {
+  padding-top: 50px;
+}
+
+.home-section:nth-of-type(even) {
+  background-color: {{ .Get "home_section_even" }};
+}
+```
+
+We have to adapt the footer background in case an "even" numbered widget is last and thus has a gray background. This is something we introduced in the `#THECONTENT` divider and is controlled in flip2019layout.css. This also controls all the even numbered guys.
+
+I can fix this in flip2018.css by removing the transparency:
+
+```css
+/* to make "white bg" transparent */
+.home-section {
+  /* background-color: transparent; */
+  /* background-color: {{ .Get "home_section_odd" }}; */
+  z-index: 1;
+}
+
+```
+... but this gits rid of the transparent background and doesn't really solve the problem. It just means that you can hard code the background color by setting what `#THECONTENT` color should be. 
+
+I think the way to fix this is to apply some Hugo magic to `navbar.html` and have the `<div id="THECONTENT">` line (the last one) set a background color that depends on the number of widgets. Here's a pretty good attempt:
+
+```html
+<!-- BASED ON widget_page.html -->
+  {{ if .IsHome }}
+    {{ .Scratch.Set "section" "home" }}
+  {{ else }}
+    {{ .Scratch.Set "section" .Section }}
+  {{ end }}
+  {{ $section := .Scratch.Get "section" }}
+
+  {{ $page := where (where .Data.Pages "Section" $section) ".Params.active" "!=" false }}
+  {{ $pageCount := len $page }}
+  {{ if modBool $pageCount 2}}
+    <div id="THECONTENT" style="background-color: rgb(247, 247, 247);">
+  {{ else }}
+    <div id="THECONTENT" style="background-color: rgb(255, 255, 255);">
+  {{ end }}
+```
+
+The problem with this one is that (1) I still need fix the widget background colors (they're incompatible with transparency) and (2) I get a weird extra space at the top. Hugo seems to be inserting an implicit `<br>` or something.
+
+**For now** I htink the best answer is to just have odd numbers of widgets.
+
+
 ## 8. Content
 
 ### About Widget
@@ -544,6 +607,205 @@ Create a `\layouts\partials\widgets\CV.html` file based on the `academic\layouts
 
 In `CV.md`, first point to the `CV.html` widget template: `widget = "CV"`.
 
+I started by 'cleaning' `CV.html` by removing the "no left column" formatting in case there's no widget title. There will always be a widget title:
+
+```html
+<!-- Custom widget -->
+<div class="row">
+
+
+  <div class="col-xs-12 col-md-4 section-heading">
+    {{ if $page.Title }}
+    <h1>{{ with $page.Title }}{{ . | markdownify }}{{ end }}</h1>
+    {{ with $page.Params.subtitle }}<p>{{ . | markdownify }}</p>{{ end }}
+    {{ end }}
+  </div>
+  <div class="col-xs-12 col-md-8">
+    {{ $page.Content }}
+  </div>
+
+
+</div> <!-- row -->
+```
+
+#### Add "download pdf" option:
+
+In `CV.html` under `<div class="col-xs-12 col-md-4 section-heading">`:
+
+```html
+    <p>
+    <a class="btn btn-primary btn-outline btn-xs" href="{{ $page.Params.cv_pdf }}">
+      Download Complete CV
+    </a>
+    </p>
+```
+
+In the header of `CV.md`:
+
+```md
+# CV location
+cv_pdf = "./files/Tanedo.pdf"
+```
+
+In the file structure: `/static/files/Tanedo.pdf`.
+
+
+#### The group logo
+
+In `flip2018.css`:  
+
+```css
+/*  for CV WIDGET  */
+
+.sidebarpic{
+  /* sets max size  */
+  width: 250px;
+  height: 250px;
+  text-align: center;
+  margin: 0 auto;
+}
+```
+
+In `CV.md`:  
+
+```md
+# Group Logo
+group_logo = "./img/logo/UCRHEP_03.png"
+```
+
+In `CV.html`:  
+
+```html
+    {{ if $page.Params.group_logo }}
+    <p>
+      <img class="sidebarpic" src="{{ $page.Params.group_logo }}">
+      <meta itemprop="image" content="{{ $page.Params.group_logo }}">
+    </p>
+    {{ end }}
+```
+
+Note that I was a bit more clever with the go `if` statement here. That's probably good practice.
+
+
+#### Filling it in
+
+`CV.html`:  
+
+```html
+  <div class="col-xs-12 col-md-8">
+    {{ $page.Content }}
+
+
+    <!-- ADAPTED FROM about.html -->
+    <div class="row">
+
+          {{ with $page.Params.interests }}
+          <div class="col-sm-5">
+            <h3>{{ i18n "interests" | markdownify }}</h3>
+            <ul class="ul-interests">
+              {{ range .interests }}
+              <li>{{ . }}</li>
+              {{ end }}
+            </ul>
+          </div>
+          {{ end }}
+
+          {{ with $page.Params.education }}
+          <div class="col-sm-7">
+            <h3>{{ i18n "education" | markdownify }}</h3>
+            <!-- <ul class="ul-edu fa-ul"> -->
+              {{ range .courses }}
+              <!-- <li> -->
+                {{ if .logo }}
+                <img src="{{ $.Site.BaseURL }}img/{{ .logo }}" style="height:1rem; float: left; padding-right: 10px;">
+                {{ else }}
+                <i class="fa-li fa fa-graduation-cap"></i>
+                {{ end }}
+                <div class="description">
+                  <!-- <p class="course"> -->
+                    {{ .course_short }}
+                    {{ with .institution_short }}, {{ . }}{{ end }}
+                    {{ with .year }}({{ . }}){{ end }}
+                    <br />
+                  <!-- </p> -->
+                  <!-- <p class="course">{{ .course }}{{ with .year }}, {{ . }}{{ end }}</p> -->
+                  <!-- <p class="institution">{{ .institution }}</p> -->
+                </div>
+              <!-- </li> -->
+              {{ end }}
+            <!-- </ul> -->
+          </div>
+          {{ end }}
+
+      </div> <!-- end row of CV items -->
+
+      {{ with $page.Params.service }}
+        <p style="font-size: .8rem;">
+          <b>Service</b>:
+          {{ range .service }}
+          {{ . }} ,
+          {{ end }}
+        </p>
+      {{ end }}
+
+
+  </div> <!-- col-xs-12 col-md-8 -->
+```
+
+CV.md:    
+
+```md
+# List your academic interests.
+[interests]
+  interests = [
+    "Dark Matter",
+    "Composite Higgs",
+    "Extra Dimensions/SUSY",
+    "Astro/cosmo-particle"
+  ]
+
+# List your qualifications (such as academic degrees).
+[[education.courses]]
+  course = "PhD in Physics"
+  course_short = "PhD"
+  institution = "Cornell University"
+  institution_short = "Cornell"
+  year = 2013
+  logo = "/logo/icon_Co.png"
+
+[[education.courses]]
+  course = "MSc in Physics"
+  course_short = "MSc"
+  institution = "Durham University / IPPP"
+  institution_short = "Durham/IPPP"
+  year = 2008
+  logo = "/logo/icon_D.png"
+
+[[education.courses]]
+  course = "MASt in Mathematics"
+  course_short = "MASt"
+  institution = "Cambridge University"
+  institution_short = "Cambridge"
+  year = 2007
+  logo = "/logo/icon_Ca.png"
+
+[[education.courses]]
+  course = "BS in Physics & Mathematics"
+  course_short = "BS"
+  institution = "Stanford University"
+  institution_short = "Stanford"
+  year = 2008
+  logo = "/logo/icon_S.png"
+
+# List your academic interests.
+[service]
+  service = [
+    "Open House Committee (chair)",
+    "Website Committee (chair)",
+    "Graduate Diversity Committee",
+    "Graduate Student Mentor (Graduate Division)"
+  ]
+```
 
 
 ### Research Widget

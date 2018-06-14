@@ -104,4 +104,21 @@
   </div><!-- /.container -->
 </nav>
 
-<div id="THECONTENT"> <!-- closed in footer_container.html; see flip2019.css -->
+
+<div id="THECONTENT">  <!-- closed in footer_container.html; see flip2019.css -->
+  
+<!-- BASED ON widget_page.html -->
+  <!-- {{ if .IsHome }}
+    {{ .Scratch.Set "section" "home" }}
+  {{ else }}
+    {{ .Scratch.Set "section" .Section }}
+  {{ end }}
+  {{ $section := .Scratch.Get "section" }}
+
+  {{ $page := where (where .Data.Pages "Section" $section) ".Params.active" "!=" false }}
+  {{ $pageCount := len $page }}
+  {{ if modBool $pageCount 2}}
+    <div id="THECONTENT" style="background-color: rgb(247, 247, 247);">
+  {{ else }}
+    <div id="THECONTENT" style="background-color: rgb(255, 255, 255);">
+  {{ end }} -->

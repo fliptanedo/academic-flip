@@ -1,0 +1,92 @@
+{{ $page := .page }}
+
+<!-- Custom widget -->
+<div class="row">
+
+
+  <div class="col-xs-12 col-md-4 section-heading">
+    {{ if $page.Title }}
+      <h1>{{ with $page.Title }}{{ . | markdownify }}{{ end }}</h1>
+    {{ with $page.Params.subtitle }}<p>{{ . | markdownify }}</p>{{ end }}
+    {{ end }}
+
+    {{ if $page.Params.cv_pdf }}
+    <p>
+      <a class="btn btn-primary btn-outline btn-xs" href="{{ $page.Params.cv_pdf }}">
+        Download Complete CV
+      </a>
+      </p>
+    {{ end }}
+
+    {{ if $page.Params.group_logo }}
+    <p>
+      <img class="sidebarpic" src="{{ $page.Params.group_logo }}">
+      <meta itemprop="image" content="{{ $page.Params.group_logo }}">
+    </p>
+    {{ end }}
+
+  </div> <!-- col-xs-12 col-md-4 -->
+
+
+
+  <div class="col-xs-12 col-md-8">
+    {{ $page.Content }}
+
+
+    <!-- ADAPTED FROM about.html -->
+    <div class="row">
+
+          {{ with $page.Params.interests }}
+          <div class="col-sm-5">
+            <h3>{{ i18n "interests" | markdownify }}</h3>
+            <ul class="ul-interests">
+              {{ range .interests }}
+              <li>{{ . }}</li>
+              {{ end }}
+            </ul>
+          </div>
+          {{ end }}
+
+          {{ with $page.Params.education }}
+          <div class="col-sm-7">
+            <h3>{{ i18n "education" | markdownify }}</h3>
+            <!-- <ul class="ul-edu fa-ul"> -->
+              {{ range .courses }}
+              <!-- <li> -->
+                {{ if .logo }}
+                <img src="{{ $.Site.BaseURL }}img/{{ .logo }}" style="height:1rem; float: left; padding-right: 10px;">
+                {{ else }}
+                <i class="fa-li fa fa-graduation-cap"></i>
+                {{ end }}
+                <div class="description">
+                  <!-- <p class="course"> -->
+                    {{ .course_short }}
+                    {{ with .institution_short }}, {{ . }}{{ end }}
+                    {{ with .year }}({{ . }}){{ end }}
+                    <br />
+                  <!-- </p> -->
+                  <!-- <p class="course">{{ .course }}{{ with .year }}, {{ . }}{{ end }}</p> -->
+                  <!-- <p class="institution">{{ .institution }}</p> -->
+                </div>
+              <!-- </li> -->
+              {{ end }}
+            <!-- </ul> -->
+          </div>
+          {{ end }}
+
+      </div> <!-- end row of CV items -->
+
+      {{ with $page.Params.service }}
+        <p style="font-size: .8rem;">
+          <b>Service</b>:
+          {{ range .service }}
+          {{ . }} ,
+          {{ end }}
+        </p>
+      {{ end }}
+
+
+  </div> <!-- col-xs-12 col-md-8 -->
+
+
+</div> <!-- row -->
