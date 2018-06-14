@@ -177,6 +177,20 @@ enableGitInfo = false
   url = "#CV"
   weight = 2
 
+[[menu.main]]
+  name = "Research"
+  url = "#research"
+  weight = 3
+
+[[menu.main]]
+  name = "Teaching"
+  url = "#teaching"
+  weight = 6
+
+[[menu.main]]
+  name = "Contact"
+  url = "#contact"
+  weight = 7
 
 # Taxonomies.
 [taxonomies]
