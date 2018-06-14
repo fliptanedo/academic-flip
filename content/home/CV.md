@@ -15,7 +15,7 @@ weight = 2
 cv_pdf = "./files/Tanedo.pdf"
 
 # Group Logo
-group_logo = "./img/logo/UCRHEP_03.png"
+group_logo = "logo/UCRHEP_03.png"
 
 
 # List your academic interests.
@@ -67,7 +67,8 @@ group_logo = "./img/logo/UCRHEP_03.png"
     "Open House Committee (chair)",
     "Website Committee (chair)",
     "Graduate Diversity Committee",
-    "Graduate Student Mentor (Graduate Division)"
+    "[Graduate Student Mentor](https://gradmentors.ucr.edu)",
+    "[Reviewer](https://publons.com/author/637273/)"
   ]
 
 +++

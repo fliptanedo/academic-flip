@@ -74,8 +74,8 @@ enableGitInfo = false
 
   # Link custom CSS and JS assets
   #   (relative to /static/css and /static/js respectively)
-  custom_css = ['flip2019layout.css', 'cryptedmail.css', 'flip2018.css', 'flipaboutme.css', 'flipnav.css']
-  custom_js  = []
+  custom_css = ['flip2019layout.css', 'cryptedmail.css', 'flip2018.css', 'flipaboutme.css', 'flipnav.css', 'slick.css', 'slick-theme.css', 'flipslick.css']
+  custom_js  = ['jquery-2.2.0.min.js', 'slick.js', 'flipslick.js']
 
   # FOOTER PARAMETERS
   footmark = "layout/feynmanfooter.png"
@@ -173,8 +173,8 @@ enableGitInfo = false
   weight = 1
 
 [[menu.main]]
-  name = "Publications"
-  url = "#publications_selected"
+  name = "CV"
+  url = "#CV"
   weight = 2
 
 

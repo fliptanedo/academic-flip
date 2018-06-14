@@ -552,7 +552,7 @@ I think the way to fix this is to apply some Hugo magic to `navbar.html` and hav
 
 The problem with this one is that (1) I still need fix the widget background colors (they're incompatible with transparency) and (2) I get a weird extra space at the top. Hugo seems to be inserting an implicit `<br>` or something.
 
-**For now** I htink the best answer is to just have odd numbers of widgets.
+**For now** I think the best answer is to just have odd numbers of widgets. Bit of a shame, but this is something that I can "deep dive" into when there's time.
 
 
 ## 8. Content
@@ -697,7 +697,7 @@ Note that I was a bit more clever with the go `if` statement here. That's probab
 
 
     <!-- ADAPTED FROM about.html -->
-    <div class="row">
+    <div class="row" style="margin-bottom: 10px;">
 
           {{ with $page.Params.interests }}
           <div class="col-sm-5">
@@ -810,7 +810,144 @@ CV.md:
 
 ### Research Widget
 
-This would be great for a carousel. I believe this is easy in [Bootstrap](https://www.w3schools.com/bootstrap/bootstrap_carousel.asp).
+This would be great for a carousel. Cushen [recommends](https://github.com/gcushen/hugo-academic/issues/399): [Slick](http://kenwheeler.github.io/slick/).
+
+**Setting Up Slick**:  
+* Note: header.html has the line that ranges over `custom_css`, whereas footer.html ranges over `custom_js`. This is relevant for slick.
+
+* `slick.css` needs to be in the `<head>`, which works if you put it in the `custom_css` list in `config.toml`. 
+
+* `slick.js` needs to be before the closing `</body>` tag, which means that having it in the footer is fine, *except*...
+
+* ... that it has to be called *after* **jQuery** (version > 1.7). `academic` already calls jQuery in footer.html, and further that the `custom_js` scripts are loaded *after* jQuery is called. We should be safe putting `slick.js` in the `custom_js` list of `config.toml`. (You'll need to make a `\static\js\` folder if you haven't already.)  **Update**: the current version of **jQuery** being called in `academic` is an old one. We'll have to call a newer one. ((Hopefully all this stuff gets cleaned up with the next version of `academic`.))
+
+* A few others: in the `css` directory, include `ajax-loader.gif` and the slick `fonts` directory. This clutters things up a little, but we can clean it up later. (I'm not even sure how necessary this is, but it was throwing up errors in my browser.)
+
+* I made a `flipslick.css` and a `flipslick.js` are based on pieces of code in the slick examples. 
+
+`flipslick.css` is: (use `.slider`'s `margin` to change the spacing above and below the slider.)
+
+```css
+.slider {
+        width: 90%;
+        margin: 10px auto;
+    }
+
+    .slick-slide {
+      margin: 0px 20px;
+    }
+
+    .slick-slide img {
+      width: 100%;
+    }
+
+    .slick-prev:before,
+    .slick-next:before {
+      color: black;
+    }
+
+    .slick-slide {
+      transition: all ease-in-out .3s;
+      opacity: .2;
+    }
+
+    .slick-active {
+      opacity: .5;
+    }
+
+    .slick-current {
+      opacity: 1;
+```
+
+* First, make a local copy of `https://code.jquery.com/jquery-2.2.0.min.js`, put it in the `\js\` folder and make sure `config.toml` calls it *before* `slick.js`. 
+
+* Then make a `flipslick.js` in the same folder and make sure `config.toml` calls it *after* `slick.js`. The content of `flipslick.js` are the details of the slider. We'll use
+
+
+```js
+$(document).on('ready', function() {
+  $('.single-item').slick({
+    dots: true,
+    infinite: true,
+    centerMode: true}
+  );
+});
+```
+
+* So far so good. You can now test this by inserting the following into the `research.html` template:
+
+```html
+<!--  -->
+
+    <!-- <div class="center slider"> -->
+    <div class="single-item slider">
+    <div>
+      <img src="http://placehold.it/350x100?text=1">
+    </div>
+    <div>
+      <img src="http://placehold.it/350x100?text=2">
+    </div>
+    <div>
+      <img src="http://placehold.it/350x100?text=3">
+    </div>
+    <div>
+      <img src="http://placehold.it/350x100?text=4">
+    </div>
+    <div>
+      <img src="http://placehold.it/350x100?text=5">
+    </div>
+    <div>
+      <img src="http://placehold.it/350x100?text=6">
+    </div>
+    <div>
+      <img src="http://placehold.it/350x100?text=7">
+    </div>
+    <div>
+      <img src="http://placehold.it/350x100?text=8">
+    </div>
+    <div>
+      <img src="http://placehold.it/350x100?text=9">
+    </div>
+    <div>
+      <img src="http://placehold.it/350x100?text=10">
+    </div>
+  </div>
+
+
+
+<!--  -->
+```
+
+* If that worked, we'll now have to replace that test code with **hugo** commands that scan over `research.md`.
+
+Here's how I did it:
+
+```html
+<!--  -->
+
+    <div class="single-item slider">
+    {{ with $page.Params.research }}
+      {{ range .projects }}
+      <div>
+
+        <img src="{{ $.Site.BaseURL }}img/{{ .image }}">
+        <!-- <img src="{{ .image }}"> -->
+
+        <div style = "font-family:Lato; font-size: .7rem;">
+        {{ if .caption }}
+          {{ .caption | markdownify }}
+        {{ end }}
+        </div>
+      </div>
+      {{ end }}
+    {{ end }}
+  </div>
+
+
+<!--  -->
+```
+
+* Here's the bonus: make it a shortcode
 
 ## License
 

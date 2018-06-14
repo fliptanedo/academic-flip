@@ -20,7 +20,7 @@
 
     {{ if $page.Params.group_logo }}
     <p>
-      <img class="sidebarpic" src="{{ $page.Params.group_logo }}">
+      <img class="sidebarpic" src="{{ $.Site.BaseURL }}img/{{ $page.Params.group_logo }}">
       <meta itemprop="image" content="{{ $page.Params.group_logo }}">
     </p>
     {{ end }}
@@ -34,7 +34,7 @@
 
 
     <!-- ADAPTED FROM about.html -->
-    <div class="row">
+    <div class="row" style="margin-bottom: 10px;">
 
           {{ with $page.Params.interests }}
           <div class="col-sm-5">
@@ -80,7 +80,7 @@
         <p style="font-size: .8rem;">
           <b>Service</b>:
           {{ range .service }}
-          {{ . }} ,
+          {{ . | markdownify }} ,
           {{ end }}
         </p>
       {{ end }}
