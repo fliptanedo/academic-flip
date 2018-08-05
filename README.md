@@ -2,6 +2,8 @@
 
 This is Flip Tanedo's website. Currently hosted on [Netlify](http://fliptanedo.netlify.com).
 
+Live: [http://physics.ucr.edu/~flip/](http://physics.ucr.edu/~flip/).
+
 # Flip's Set Up Notes
 
 These are notes on how I modified the May 2018 version of `Hugo Theme Academic` (George Cushen) to create my personal website. 
